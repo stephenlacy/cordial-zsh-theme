@@ -26,9 +26,16 @@ function git_prompt_info() {
   echo "$ZSH_THEME_GIT_PROMPT_PREFIX$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_SUFFIX"
 }
 
+function check_tmux() {
+  if [[ -n $TMUX ]]; then
+    echo '¤'
+  fi
+}
 
-local ret_status="%(?:%{$fg_bold[green]%}»:%{$fg_bold[red]%}»%s)"
-PROMPT='${ret_status}%{$fg_bold[green]%}%p $(collapse_pwd) %{$fg_bold[blue]%}$(git_prompt_info)%{$reset_color%}%{$fg_bold[blue]%} $(get_npm_package_version)$ %{$reset_color%}'
+
+local ret_status="$(check_tmux)%(?:%{$fg_bold[green]%}»:%{$fg_bold[red]%}»%s)"
+PROMPT='${ret_status}%{$fg_bold[green]%}%p $(collapse_pwd) %{$fg_bold[blue]%}$(git_prompt_info)%{$reset_color%}%{$fg_bold[blue]%} $(get_npm_package_version)%{$reset_color%}'
 
 ZSH_THEME_GIT_PROMPT_PREFIX="("
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg[blue]%})"
+
